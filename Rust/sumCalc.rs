@@ -1,21 +1,17 @@
 use std::io::stdin;
 
 trait KtStd {
-    fn let_ref<R, F>(&self, block: F) -> R where F: FnOnce(&Self) -> R;
-
-    fn also_mut<F>(&mut self, block: F) -> &mut Self where F: FnMut(&mut Self);
-}
-
-impl<T> KtStd for T {
-    fn let_ref<R, F>(&self, block: F) -> R where F: FnOnce(&Self) -> R {
+    fn let_ref<R>(&self, block: fn(&Self) -> R) -> R {
         block(self)
     }
 
-    fn also_mut<F>(&mut self, mut block: F) -> &mut Self where F: FnMut(&mut Self) {
+    fn also_mut(&mut self, block: fn(&mut Self)) -> &mut Self {
         block(self);
         self
     }
 }
+
+impl<T> KtStd for T {}
 
 fn main() {
     loop {
