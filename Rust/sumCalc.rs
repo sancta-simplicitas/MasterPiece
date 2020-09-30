@@ -16,7 +16,7 @@ impl<T> KtStd for T {}
 fn main() {
     loop {
         String::new()
-            .also_mut(|mut s| { stdin().read_line(&mut s).unwrap(); })
+            .also_mut(|s| { stdin().read_line(s).unwrap(); })
             .split_whitespace()
             .filter_map(|c| c.parse::<f64>().ok())
             .sum::<f64>()
